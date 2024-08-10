@@ -1,0 +1,54 @@
+@use '../../styles/variables.scss' as *;
+
+.sidebar {
+  background-color: $light-black;
+  flex: 0 0 234px;
+  height: 100%;
+  border-right: 1px solid $dark-gray;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $gray;
+  padding: 10px 15px 10px 20px;
+  border-bottom: 1px solid $dark-gray;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 0.875rem;
+  line-height: 1rem;
+}
+
+.subtitle {
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem {
+  padding: 7px 20px;
+  background-color: $light-black;
+  color: $white;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  justify-content: start;
+
+  &.active {
+    background-color: $light-dark-gray;
+  }
+}
+
+.icon {
+  margin-right: 17px;
+}

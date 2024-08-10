@@ -1,0 +1,8 @@
+@use '../../styles/variables.scss' as *;
+
+.contentWithTable {
+  background-color: $black;
+  padding: 10px;
+  height: calc(100% - 49px);
+  overflow: auto;
+}

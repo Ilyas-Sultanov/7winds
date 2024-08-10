@@ -1,0 +1,15 @@
+@use '../../../../styles/variables.scss' as *;
+
+td.editing {
+  padding: 13px 32px 13px 0 !important;
+}
+
+.input {
+  border: 1px solid $dark-gray;
+  border-radius: 6px;
+  background-color: transparent;
+  padding: 8px 10px;
+  width: 100%;
+  outline: none;
+  color: #71717A;
+}

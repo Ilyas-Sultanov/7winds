@@ -1,0 +1,39 @@
+@use './styles/variables.scss' as *;
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 43px);
+}
+
+.main {
+  flex: 1 1 0%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.titleBox {
+  background-color: $light-black;
+  border-bottom: 1px solid $dark-gray;
+  display: flex;
+  align-items: center;
+  height: 49px;
+  padding: 0 20px;
+}
+
+.titleWrapper {
+  display: inline-block;
+  border-right: 1px solid $dark-gray;
+} 
+
+.title {
+  color: $white;
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+  font-weight: normal;
+}

@@ -1,0 +1,79 @@
+@use '../../../../styles/variables.scss' as *;
+
+.row {
+  border-bottom: 1px solid $dark-gray;
+  position: relative;
+  
+  & td:first-of-type {
+    padding: 16px 32px 16px 0;
+    padding-left: calc((var(--level) * 20px) + 10px);
+  }
+
+  &.hasParentRow::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -50%;
+    left: calc((var(--level) * 20px) + 4px);
+    width: 12px;
+    height: 61px;
+    border-left: 1px solid $gray;
+    border-bottom: 1px solid $gray;
+    z-index: calc(var(--level) + 1);
+  }
+
+  &.hasChildAndNextSibling {
+    
+    & td:first-of-type::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: calc((var(--level) * 20px) + 4px);
+      height: calc(var(--child-count) * 62px);
+      width: 20px;
+      border-left: 1px solid $gray;
+    }
+  }
+}
+
+.rowBtns {
+  display: inline-flex;
+  background-color: transparent;
+  flex-wrap: nowrap;
+  column-gap: 6px;
+  border-radius: 6px;
+  padding: 6px;
+  position: relative;
+  z-index: calc(var(--level) + 3);
+  min-width: 48px;
+
+  .btn {
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      background-color: $dark-gray;
+      position: absolute;
+      z-index: -1;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+    }
+  }
+
+  .deleteBtn {
+    display: none;
+    background-color: transparent;
+  }
+
+  &:hover {
+    background-color: $dark-gray;
+  }
+
+  &:hover .deleteBtn {
+    display: inline-flex;
+  }
+}
