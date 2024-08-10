@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { DeletedResult, NewTableRowData, TableRowData, UpdatedTableRowData } from '@/models/data'
-import { dataService } from '@/services/dataService'
+import { dataService } from './dataService'
 import { excludeKeys } from '@/helpers/excludeKeys'
 
 export function useTableData() {
