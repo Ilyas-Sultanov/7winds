@@ -21,7 +21,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/7winds',
   build: {
     rollupOptions: {
       output: {

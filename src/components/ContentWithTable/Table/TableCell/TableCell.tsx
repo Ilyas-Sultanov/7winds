@@ -1,6 +1,6 @@
 import { ReactNode, KeyboardEvent, useRef, useEffect, ChangeEvent } from 'react'
 import { flexRender, Cell } from '@tanstack/react-table'
-import { TableRowData } from '@/models/data'
+import { TableRowData } from '../types'
 import classes from './TableCell.module.scss'
 
 type Props = {

@@ -1,4 +1,4 @@
-import { CreateResult, NewTableRowData, TableRowData, DeletedResult, UpdateResult, UpdatedTableRowData } from '@/models/data'
+import { CreateResult, NewTableRowData, TableRowData, DeletedResult, UpdateResult, UpdatedTableRowData } from './types'
 
 const BASE_URL = 'http://185.244.172.108:8081'
 const E_ID = '133819'

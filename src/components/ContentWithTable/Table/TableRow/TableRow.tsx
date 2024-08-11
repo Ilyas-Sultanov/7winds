@@ -1,7 +1,7 @@
 import { KeyboardEvent, ReactNode, useState, useEffect } from 'react'
 import { Cell, Row } from '@tanstack/react-table'
 import classNames from 'classnames'
-import { TableRowData } from '@/models/data'
+import { TableRowData } from '../types'
 import { DocumentIcon, TrashIcon } from '@/components/icons'
 import { TableCell } from '../TableCell/TableCell'
 import classes from './TableRow.module.scss'
@@ -47,10 +47,7 @@ export function TableRow({ row, addChildRow, saveNewRow, updateRow, deleteRow }:
     setEditableData((prev) => {
       if (prev) {
         const newData = {...prev}
-        if (
-          dataKey !== 'child' &&
-          (typeof newData[dataKey] === 'string' || typeof newData[dataKey] === 'number')
-        ) {
+        if (typeof newData[dataKey] === 'string' || typeof newData[dataKey] === 'number') {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           newData[dataKey] = value

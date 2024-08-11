@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { DeletedResult, NewTableRowData, TableRowData, UpdatedTableRowData } from '@/models/data'
+import { DeletedResult, NewTableRowData, TableRowData, UpdatedTableRowData } from './types'
 import { dataService } from './dataService'
 import { excludeKeys } from '@/helpers/excludeKeys'
 
@@ -56,18 +56,19 @@ export function useTableData() {
     if (dataId < 0) {
       throw new Error('Попытка добавить потомка для не существующих данных')
     }
-    setTableData((prevData) => {
-      const newData = structuredClone(prevData)
+    setTableData((prev) => {
+      const newData = structuredClone(prev)
       const newChild = getNewTableRowData(dataId)
 
       const addChild = (tData: Array<TableRowData>) => {
-        tData.forEach((item) => {
+        for (let i = 0; i < tData.length; i += 1) {
+          const item = tData[i]
           if (item.id === dataId) {
             item.child = [...item.child, newChild]
           } else if (item.child) {
             addChild(item.child)
           }
-        })
+        }
       }
 
       addChild(newData)
@@ -83,8 +84,8 @@ export function useTableData() {
       if (dataId > 0) {
         result = await dataService.delete(dataId)
       }
-      setTableData((prevData) => {
-        const newData = [...prevData]
+      setTableData((prev) => {
+        const newData = [...prev]
         const deleteRow = (tData: Array<TableRowData>) => {
           for (let i = 0; i < tData.length; i += 1) {
             if (tData[i].id === dataId) {
@@ -119,62 +120,68 @@ export function useTableData() {
       setIsLoading(true)
       const preparedData: NewTableRowData = excludeKeys(data, ['id', 'total', 'child'])
       const result = await dataService.create(preparedData)
-      const newData = [...tableData]
-      const changeRowData = (tData: Array<TableRowData>) => {
-        for (let i = 0; i < tData.length; i += 1) {
-          if (tData[i].id === data.id) {
-            tData[i] = { ...result.current, parentId: data.parentId, child: [] }
-          } else {
-            for (let j = 0; j < result.changed.length; j += 1) {
-              if (result.changed[j].id === tData[i].id) {
-                tData[i] = {...result.changed[j], parentId: tData[i].parentId, child: [...tData[i].child]}
+
+      setTableData((prev) => {
+        const newData = [...prev]
+        const changeRowData = (tData: Array<TableRowData>) => {
+          for (let i = 0; i < tData.length; i += 1) {
+            if (tData[i].id === data.id) {
+              tData[i] = { ...result.current, parentId: data.parentId, child: [] }
+            } else {
+              for (let j = 0; j < result.changed.length; j += 1) {
+                if (result.changed[j].id === tData[i].id) {
+                  tData[i] = {...result.changed[j], parentId: tData[i].parentId, child: [...tData[i].child]}
+                }
               }
             }
-          }
-          if (tData[i].child) {
-            changeRowData(tData[i].child) 
+            if (tData[i].child) {
+              changeRowData(tData[i].child) 
+            }
           }
         }
-      }
-      changeRowData(newData)
-      setTableData(newData)
+        changeRowData(newData)
+        return newData
+      })
     } catch(err) {
       handleError(err)
     } finally {
       setIsLoading(false)
     }
-  }, [tableData])
+  }, [])
 
   const updateRow = useCallback(async (data: TableRowData) => {
     try {
       setIsLoading(true)
       const preparedData: UpdatedTableRowData = excludeKeys(data, ['id', 'total', 'child', 'parentId'])
       const result = await dataService.update(data.id, preparedData)
-      const newData = [...tableData]
-      const changeRowData = (tData: Array<TableRowData>) => {
-        for (let i = 0; i < tData.length; i += 1) {
-          if (tData[i].id === result.current.id) {
-            tData[i] = { ...result.current, parentId: data.parentId, child: [...data.child] }
-          } else {
-            for (let j = 0; j < result.changed.length; j += 1) {
-              if (result.changed[j].id === tData[i].id) {
-                tData[i] = {...result.changed[j], parentId: tData[i].parentId, child: [...tData[i].child]}
+
+      setTableData((prev) => {
+        const newData = [...prev]
+        const changeRowData = (tData: Array<TableRowData>) => {
+          for (let i = 0; i < tData.length; i += 1) {
+            if (tData[i].id === result.current.id) {
+              tData[i] = { ...result.current, parentId: data.parentId, child: [...data.child] }
+            } else {
+              for (let j = 0; j < result.changed.length; j += 1) {
+                if (result.changed[j].id === tData[i].id) {
+                  tData[i] = {...result.changed[j], parentId: tData[i].parentId, child: [...tData[i].child]}
+                }
               }
             }
-          }
-          if (tData[i].child) {
-            changeRowData(tData[i].child) 
+            if (tData[i].child) {
+              changeRowData(tData[i].child) 
+            }
           }
         }
-      }
-      changeRowData(newData)
-      setTableData(newData)
+        changeRowData(newData)
+        return newData
+      })
     } catch(err) {
       handleError(err)
     } finally {
       setIsLoading(false)
     }
-  }, [tableData])
+  }, [])
 
   return {
     isLoading,

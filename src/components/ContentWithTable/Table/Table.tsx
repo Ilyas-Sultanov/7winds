@@ -7,7 +7,7 @@ import {
   ColumnDef,
   flexRender,
 } from '@tanstack/react-table'
-import { type TableRowData } from '@/models/data'
+import { type TableRowData } from './types'
 import { TableRow } from './TableRow/TableRow'
 import { useTableData } from './useTableData'
 import { TableLoader } from './TableLoader/TableLoader'
@@ -108,9 +108,7 @@ export function Table() {
             })}
           </tbody>
         </table>
-        {
-          isLoading ? <TableLoader /> : null
-        }
+        { isLoading && <TableLoader /> }
       </>
     )
   }

@@ -1,12 +1,12 @@
 export type TableRowData = {
   id: number
-  rowName:	string
+  rowName: string
   total: number
   salary:	number
-  mimExploitation:	number
-  machineOperatorSalary:	number
-  materials:	number
-  mainCosts:	number
+  mimExploitation: number
+  machineOperatorSalary: number
+  materials: number
+  mainCosts: number
   supportCosts: number
   equipmentCosts:	number
   overheads:	number
